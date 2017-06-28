@@ -1,4 +1,4 @@
-# µDashboard - an advanced dashboard API for Drupal
+# Calista - Advanced dashboard/list API for Drupal
 
 This initial version is a raw export of the *ucms_dashboard* from the
 https://github.com/makinacorpus/drupal-ucms Drupal module suite. Only namespaces
@@ -15,7 +15,7 @@ libraries, licences provided in the Resources/meta directory.
 It depends heavily on makinacorpus/drupal-sf-dic, the easiest way to install is:
 
 ```
-composer install makinacorpus/drupal-udashboard
+composer install makinacorpus/drupal-calista
 ```
 
 
@@ -27,14 +27,14 @@ composer install makinacorpus/drupal-udashboard
 #### Enable top toolbar
 
 ```php
-$conf['udashboard_context_pane_enable'] = true;
+$conf['calista_context_pane_enable'] = true;
 ```
 
 
 #### Enable context pane
 
 ```php
-$conf['udashboard_context_pane_enable'] = true;
+$conf['calista_context_pane_enable'] = true;
 ```
 
 
@@ -43,7 +43,7 @@ $conf['udashboard_context_pane_enable'] = true;
 This is a very specific setting for usage with UCMS.
 
 ```php
-$conf['udashboard_breadcrumb_alter'] = true;
+$conf['calista_breadcrumb_alter'] = true;
 ```
 
 
@@ -55,7 +55,7 @@ If you wish to embed this module's CSS or custom LESS into your own custom
 theme, you might wish to disable CSS loading:
 
 ```php
-$conf['udashboard_disable_css'] = true;
+$conf['calista_disable_css'] = true;
 ```
 
 
@@ -64,7 +64,7 @@ $conf['udashboard_disable_css'] = true;
 By setting this to ``true``, seven fixes will always be included:
 
 ```php
-$conf['udashboard_seven_force'] = true;
+$conf['calista_seven_force'] = true;
 ```
 
 By setting it to ``false``, the will be always dropped.
@@ -108,8 +108,8 @@ A `DefaultAccountDatasource` is available and abstracts the main part of queryin
 
 namespace MyModule\Page;
 
-use MakinaCorpus\Dashboard\Drupal\Datasource\Account\DefaultAccountDatasource;
-use MakinaCorpus\Dashboard\Drupal\Datasource\Query;
+use MakinaCorpus\Drupal\Calista\Datasource\Account\DefaultAccountDatasource;
+use MakinaCorpus\Drupal\Calista\Datasource\Query;
 
 /**
  * Account Datasource
@@ -150,10 +150,10 @@ services:
 
 ### Template
 
-The template extends `module:udashboard:views/Page/page.html.twig` which provides the main components for display a table of items. All you have to do is override the columns and rows:
+The template extends `module:calista:views/Page/page.html.twig` which provides the main components for display a table of items. All you have to do is override the columns and rows:
 
 ```twig
-{% extends 'module:udashboard:views/Page/page.html.twig' %}
+{% extends 'module:calista:views/Page/page.html.twig' %}
 
 {%- block item -%}
     <tr class="separator">
@@ -171,7 +171,7 @@ The template extends `module:udashboard:views/Page/page.html.twig` which provide
         <td>{{ item.created|date('d/m/Y H:i') }}</td>
         <td>{{ item.access|date('d/m/Y H:i') }}</td>
         <td>{{ item.status ? 'Yes'|t : 'No'|t }}</td>
-        <td class="actions">{{ udashboard_primary(item) }}</td>
+        <td class="actions">{{ calista_primary(item) }}</td>
     </tr>
 {%- endblock -%}
 
@@ -214,8 +214,8 @@ namespace MyModule\Action;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\user\User;
-use MakinaCorpus\Dashboard\Drupal\Action\Action;
-use MakinaCorpus\Dashboard\Drupal\Action\ActionProviderInterface;
+use MakinaCorpus\Drupal\Calista\Action\Action;
+use MakinaCorpus\Drupal\Calista\Action\ActionProviderInterface;
 
 /**
  * Action provider for accounts
@@ -254,5 +254,5 @@ services:
     mymodule.account_action_provider:
         public: false
         class: MyModule\Action\AccountActionProvider
-        tags: [{name: udashboard.action_provider}]
+        tags: [{name: calista.action_provider}]
 ```

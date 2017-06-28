@@ -1,6 +1,6 @@
 {
-    "name": "makinacorpus/drupal-udashboard",
-    "description": "Advanced dashboard API for Drupal",
+    "name": "makinacorpus/drupal-calista",
+    "description": "Advanced dashboard/list API for Drupal using makinacorpus/drupal-calista",
     "type": "drupal-module",
     "license": "GPL-2",
     "authors": [
@@ -32,30 +32,25 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "makinacorpus/calista": "dev-master",
         "makinacorpus/drupal-sf-dic": ">=3.2.6",
         "php": ">=5.5",
         "symfony/dependency-injection": "^3.2",
         "symfony/event-dispatcher": "^3.1",
         "symfony/http-foundation": "^3.1",
-        "symfony/options-resolver": "^3.2",
-        "symfony/property-access": "^3.2",
-        "symfony/property-info": "^3.2",
-        "symfony/security": "^3.1"
+        "symfony/property-info": "^3.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.1",
-        "symfony/form": "^3.2",
-        "symfony/options-resolver": "^3.2",
-        "twig/twig": "^2.4"
+        "phpunit/phpunit": "^5.1"
     },
     "autoload": {
         "psr-4": {
-            "MakinaCorpus\\Dashboard\\" : "src/"
+            "MakinaCorpus\\Drupal\\Calista\\" : "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MakinaCorpus\\Dashboard\\Tests\\" : "tests/"
+            "MakinaCorpus\\Drupal\\Calista\\Tests\\" : "tests/"
         }
     }
 }

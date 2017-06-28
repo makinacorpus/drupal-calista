@@ -1,0 +1,5 @@
+name = "Calista"
+description = "Advanced dashboard/list API for Drupal using makinacorpus/drupal-calista"
+core = 7.x
+package = Content administration
+php = 5.5

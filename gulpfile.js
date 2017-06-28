@@ -6,7 +6,7 @@ var gulp  = require('gulp'),
 
 // LESS compilation
 gulp.task('less', function () {
-  var pipe = gulp.src('less/udashboard.less');
+  var pipe = gulp.src('less/calista.less');
   pipe = pipe
     .pipe(less())
     .pipe(cssmin())
