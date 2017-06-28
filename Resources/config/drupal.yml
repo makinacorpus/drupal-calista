@@ -1,5 +1,10 @@
 services:
 
+  # Context pane
+  calista.context:
+    class: MakinaCorpus\Drupal\Calista\Context\ContextPane
+    arguments: ['@event_dispatcher', '@request_stack']
+
   # Action providers
   calista.action_provider.node:
     public: false

@@ -73,19 +73,19 @@ class NodePageDefinition extends AbstractPageDefinition
                     'bool_value_true' => t("online"),
                 ],
                 'created' => [
-                    'callback' => '\\MakinaCorpus\\Calista\\Drupal\\PropertyInfo\\EntityField::renderTimestampAsDate',
+                    'callback' => '\\MakinaCorpus\\Drupal\\Calista\\PropertyInfo\\EntityField::renderTimestampAsDate',
                 ],
                 'changed' => [
-                    'callback' => '\\MakinaCorpus\\Calista\\Drupal\\PropertyInfo\\EntityField::renderTimestampAsInterval',
+                    'callback' => '\\MakinaCorpus\\Drupal\\Calista\\PropertyInfo\\EntityField::renderTimestampAsInterval',
                 ],
                 'field_tags' => [
                     'label' => "Tags",
-                    'callback' => '\\MakinaCorpus\\Calista\\Drupal\\PropertyInfo\\EntityField::renderField',
+                    'callback' => '\\MakinaCorpus\\Drupal\\Calista\\PropertyInfo\\EntityField::renderField',
                 ],
             ],
 //             'templates' => [
-//                 'grid' => 'module:calista:views/Page/page-grid.html.twig',
-//                 'table' => 'module:calista:views/Page/page.html.twig',
+//                 'grid' => '@calista/Page/page-grid.html.twig',
+//                 'table' => '@calista/Page/page.html.twig',
 //             ],
             'view_type' => TwigView::class,
         ]);

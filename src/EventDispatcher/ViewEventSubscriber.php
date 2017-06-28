@@ -35,7 +35,7 @@ class ViewEventSubscriber implements EventSubscriberInterface
         if (function_exists('drupal_add_library') && $view instanceof TwigView) {
             drupal_add_library('calista', 'calista_page');
 
-            $seven = variable_get('calista.seven_force');
+            $seven = variable_get('calista_seven_force');
             if (null === $seven && 'seven' === $GLOBALS['theme']) {
                 drupal_add_library('calista', 'calista_seven');
             } elseif (true === $seven) {

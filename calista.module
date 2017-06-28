@@ -108,7 +108,7 @@ function calista_menu() {
  * Implements hook_menu_alter().
  */
 function calista_menu_alter(&$items) {
-  if (variable_get('calista.breadcrumb_alter', false)) {
+  if (variable_get('calista_breadcrumb_alter', false)) {
     // Remove all the unnecessary pages using the 'access administration pages'
     // or whatever else permission the users may have.
     foreach ([
@@ -146,7 +146,7 @@ function calista_menu_alter(&$items) {
  * Implements hook_menu_breadcrumb_alter().
  */
 function calista_menu_breadcrumb_alter(&$active_trail, $item) {
-  if (variable_get('calista.breadcrumb_alter', false) && path_is_admin(current_path())) {
+  if (variable_get('calista_breadcrumb_alter', false) && path_is_admin(current_path())) {
 
     // Remove the useless 'Home' link. Using array_splice() will reset the
     // numerical indexes within the array allowing the rest of the function
@@ -438,7 +438,7 @@ function calista_user_login(&$edit, $account) {
   }
   // This infamous redirect is useful only when the module is asked
   // to alter the dashboard.
-  if (!variable_get('calista.breadcrumb_alter', false)) {
+  if (!variable_get('calista_breadcrumb_alter', false)) {
     return;
   }
   if (module_exists('ucms_site') && ucms_site_manager()->hasContext()) {
@@ -492,7 +492,7 @@ function calista_page_build(&$page) {
   $page['content']['#attached']['library'][] = ['calista', 'calista'];
   $page['content']['#attached']['library'][] = ['system', 'jquery.once'];
 
-  if (variable_get('calista.context_pane_enable') &&
+  if (variable_get('calista_context_pane_enable') &&
       user_access(CALISTA_PERM_USE_CONTEXT_PANE)
   ) {
     /** @var \MakinaCorpus\Drupal\Calista\Context\ContextPane $context */
@@ -542,7 +542,7 @@ function calista_page_build(&$page) {
   }
 
   if (
-    variable_get('calista.toolbar_enable') &&
+    variable_get('calista_toolbar_enable') &&
     (user_is_logged_in() || path_is_admin(current_path()))
     && module_exists('ucms_site')
   ) {
@@ -603,7 +603,7 @@ function calista_library() {
     ],
   ];
 
-  if (variable_get('calista.disable_css')) {
+  if (variable_get('calista_disable_css')) {
     $libraries['calista']['css'] = [];
   }
 

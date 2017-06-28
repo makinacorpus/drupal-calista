@@ -150,10 +150,10 @@ services:
 
 ### Template
 
-The template extends `module:calista:views/Page/page.html.twig` which provides the main components for display a table of items. All you have to do is override the columns and rows:
+The template extends `@calista/Page/page.html.twig` which provides the main components for display a table of items. All you have to do is override the columns and rows:
 
 ```twig
-{% extends 'module:calista:views/Page/page.html.twig' %}
+{% extends '@calista/Page/page.html.twig' %}
 
 {%- block item -%}
     <tr class="separator">

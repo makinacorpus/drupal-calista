@@ -6,6 +6,7 @@ use Drupal\Core\DependencyInjection\ServiceProviderInterface;
 use MakinaCorpus\Calista\DependencyInjection\Compiler\ActionProviderRegisterPass;
 use MakinaCorpus\Calista\DependencyInjection\Compiler\DowngradeCompatibilityPass;
 use MakinaCorpus\Calista\DependencyInjection\Compiler\PageDefinitionRegisterPass;
+use MakinaCorpus\Calista\DependencyInjection\Compiler\RegisterTemplatePass;
 use MakinaCorpus\Drupal\Calista\DependencyInjection\Compiler\ActionProcessorRegisterPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -30,5 +31,6 @@ class ServiceProvider implements ServiceProviderInterface
         $container->addCompilerPass(new ActionProviderRegisterPass());
         $container->addCompilerPass(new ActionProcessorRegisterPass());
         $container->addCompilerPass(new PageDefinitionRegisterPass(), PassConfig::TYPE_BEFORE_REMOVING);
+        $container->addCompilerPass(new RegisterTemplatePass());
     }
 }
