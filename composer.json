@@ -32,7 +32,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "makinacorpus/calista": "dev-master",
+        "makinacorpus/php-calista": "dev-master",
         "makinacorpus/drupal-sf-dic": ">=3.2.6",
         "php": ">=5.5",
         "symfony/dependency-injection": "^3.2",
