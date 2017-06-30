@@ -104,10 +104,9 @@ function calista_menu() {
   foreach ($viewFactory->getPageDefinitionList(ConfigPageDefinition::class) as $name => $page) {
     $extra = $page->getExtraOptions();
     if (isset($extra['route'])) {
-      $items[$extra['route']['href']] = $extra['route'] + [
-        'page callback' => 'sf_dic_page',
-        'page arguments' => [PageController::class .  '::page', $name],
-      ];
+      $item = $extra['route'] + ['page callback' => 'sf_dic_page', 'page arguments' => [PageController::class .  '::page', $name]];
+      _sf_dic_menu_type($item);
+      $items[$extra['route']['href']] = $item;
     }
   }
 
