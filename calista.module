@@ -529,7 +529,7 @@ function calista_page_build(&$page) {
         $tabs = $context->getTabs();
     }
 
-    $page['page_top']['ucontext_pane'] = [
+    $page['page_top']['calista_context_pane'] = [
       '#theme'    => 'calista_context',
       '#items'    => $context->getAll(),
       '#tabs'     => $tabs,
