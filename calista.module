@@ -6,7 +6,8 @@
 use MakinaCorpus\Calista\Action\Action;
 use MakinaCorpus\Drupal\Calista\Controller\ActionProcessorController;
 use MakinaCorpus\Drupal\Calista\Controller\AjaxPageController;
-use MakinaCorpus\Drupal\Calista\Controller\TestController;
+use MakinaCorpus\Drupal\Calista\Controller\PageController;
+use MakinaCorpus\Calista\DependencyInjection\ConfigPageDefinition;
 
 /**
  * View mode for content display.
@@ -88,18 +89,27 @@ function calista_menu() {
   ];
 
   // Testing
-  $items['admin/test/accounts'] = [
+  $items['admin/calista/test/user'] = [
     'page callback'     => 'sf_dic_page',
-    'page arguments'    => [TestController::class .  '::listAccounts'],
+    'page arguments'    => [PageController::class .  '::page', 'calista.page.drupal_account'],
     'access arguments'  => ['non existing permission'],
     'type'              => MENU_CALLBACK,
   ];
-  $items['admin/test/nodes'] = [
-    'page callback'     => 'sf_dic_page',
-    'page arguments'    => [TestController::class .  '::listNodes'],
-    'access arguments'  => ['non existing permission'],
-    'type'              => MENU_CALLBACK,
-  ];
+
+  // Find all pages, register them
+  // @todo Find a way using the compiler passes.
+  /** @var \MakinaCorpus\Calista\DependencyInjection\ViewFactory $viewFactory */
+  $viewFactory = \Drupal::service('calista.view_factory');
+  /** @var \MakinaCorpus\Calista\DependencyInjection\ConfigPageDefinition $page */
+  foreach ($viewFactory->getPageDefinitionList(ConfigPageDefinition::class) as $name => $page) {
+    $extra = $page->getExtraOptions();
+    if (isset($extra['route'])) {
+      $items[$extra['route']['href']] = $extra['route'] + [
+        'page callback' => 'sf_dic_page',
+        'page arguments' => [PageController::class .  '::page', $name],
+      ];
+    }
+  }
 
   return $items;
 }

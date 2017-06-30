@@ -1,0 +1,36 @@
+# Sample page definitions, they can be put directly into the services.yml file
+calista:
+  pages:
+    # Sample node page
+    calista_node_test:
+      datasource: node
+      input:
+        search_parse: true
+        search_enable: true
+        limit_default: 32
+      view:
+        show_search: true
+        properties:
+          type:
+          title:
+            string_maxlength: 48
+          status:
+            type: bool
+            bool_value_false: offline
+            bool_value_true: online
+          created:
+            callback: MakinaCorpus\Drupal\Calista\PropertyInfo\EntityField::renderTimestampAsDate
+          changed:
+            callback: MakinaCorpus\Drupal\Calista\PropertyInfo\EntityField::renderTimestampAsInterval
+          field_tags:
+            label: Tags
+            callback: MakinaCorpus\Drupal\Calista\PropertyInfo\EntityField::renderField
+        view_type: twig_page
+      # Extra here are Drupal-specific options
+      extra:
+        # Route definition must match hook_menu() items, the only difference
+        # is that you need to add the 'href' key
+        route:
+          href: admin/calista/test/node
+          title: Site nodes
+          access arguments: ['access content']

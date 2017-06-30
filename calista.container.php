@@ -19,9 +19,9 @@ class ServiceProvider implements ServiceProviderInterface
      */
     public function register(ContainerBuilder $container)
     {
-        // @todo check if bundle is present
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/Resources/config'));
         $loader->load('drupal.yml');
+        $loader->load('pages.yml');
 
         $container->addCompilerPass(new ActionProcessorRegisterPass());
     }

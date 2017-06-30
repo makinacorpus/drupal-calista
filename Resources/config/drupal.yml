@@ -36,17 +36,12 @@ services:
     public: false
     class: MakinaCorpus\Drupal\Calista\Datasource\DefaultNodeDatasource
     arguments: ['@database', '@entity.manager']
-    tags: [{name: calista.datasource}]
+    tags: [{name: calista.datasource, id: node}]
 
-  # Drupal page definitions
+  # Sample Drupal page definition from services
   calista.page.drupal_account:
     public: true
     class: MakinaCorpus\Drupal\Calista\Page\AccountPageDefinition
-    tags: [{name: calista.page_definition}]
-  calista.page.drupal_node:
-    public: true
-    class: MakinaCorpus\Drupal\Calista\Page\NodePageDefinition
-    arguments: ['@calista.datasource.drupal_node']
     tags: [{name: calista.page_definition}]
 
   # Event subscribers
