@@ -4,10 +4,8 @@ namespace MakinaCorpus\Drupal\Calista\Datasource;
 
 use Drupal\Core\Entity\EntityManager;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\node\Node;
 use Drupal\node\NodeInterface;
 use MakinaCorpus\Calista\Datasource\AbstractDatasource;
-use MakinaCorpus\Calista\Datasource\DefaultDatasourceResult;
 use MakinaCorpus\Calista\Datasource\Filter;
 use MakinaCorpus\Calista\Datasource\Query;
 use MakinaCorpus\Drupal\Calista\Datasource\QueryExtender\DrupalPager;
@@ -21,6 +19,7 @@ class DefaultNodeDatasource extends AbstractDatasource
 
     private $database;
     private $entityManager;
+    private $pager;
 
     /**
      * Default constructor
@@ -39,7 +38,7 @@ class DefaultNodeDatasource extends AbstractDatasource
      */
     public function getItemClass()
     {
-        return Node::class;
+        return NodeInterface::class;
     }
 
     /**
@@ -89,13 +88,19 @@ class DefaultNodeDatasource extends AbstractDatasource
                 ]),
             (new Filter('type', $this->t("Type")))
                 ->setChoicesMap(node_type_get_names()),
+            (new Filter('history_user_id', $this->t("User (history)"))),
+                /* ->setChoicesMap(node_type_get_names()), @todo use callback */
+            (new Filter('revision_user_id', $this->t("User (node revision)"))),
+                /* ->setChoicesMap(node_type_get_names()), @todo use callback */
+            (new Filter('user_id', $this->t("User (node owner)"))),
+                /* ->setChoicesMap(node_type_get_names()), @todo use callback */
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getSortFields($query)
+    public function getSorts()
     {
         return [
             'n.created'     => $this->t("creation date"),
@@ -105,14 +110,6 @@ class DefaultNodeDatasource extends AbstractDatasource
             'n.uid'         => $this->t("owner"),
             'n.title'       => $this->t("title"),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultSort()
-    {
-        return ['n.changed', Query::SORT_DESC];
     }
 
     /**
@@ -176,6 +173,20 @@ class DefaultNodeDatasource extends AbstractDatasource
     }
 
     /**
+     * Get pager
+     *
+     * @return DrupalPager
+     */
+    final protected function getPager()
+    {
+        if (!$this->pager) {
+            throw new \LogicException("you cannot fetch the pager before the database query has been created");
+        }
+
+        return $this->pager;
+    }
+
+    /**
      * Should the implementation add group by n.nid clause or not
      *
      * It happens that some complex implementation will add their own groups,
@@ -185,7 +196,7 @@ class DefaultNodeDatasource extends AbstractDatasource
      */
     protected function addGroupby()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -196,14 +207,8 @@ class DefaultNodeDatasource extends AbstractDatasource
      *
      * @return \SelectQuery
      */
-    protected function createSelectQuery(Query $query)
+    final protected function createSelectQuery(Query $query)
     {
-// @todo fixme
-//         if (empty($query['user_id'])) {
-//             // @todo fixme
-//             $query['user_id'] = $GLOBALS['user']->uid;
-//         }
-
         $select = $this->getDatabase()->select('node', 'n')->fields('n', ['nid'])->addTag('node_access');
 
         if ($this->addGroupby()) {
@@ -223,7 +228,7 @@ class DefaultNodeDatasource extends AbstractDatasource
      * @return \SelectQuery
      *   It can be an extended query, so use this object.
      */
-    protected function process(\SelectQuery $select, Query $query)
+    final protected function process(\SelectQuery $select, Query $query)
     {
         $sortOrder = Query::SORT_DESC === $query->getSortOrder() ? 'desc' : 'asc';
         if ($query->hasSortField()) {
@@ -236,11 +241,45 @@ class DefaultNodeDatasource extends AbstractDatasource
         }
 
         // Also add a few joins,  that might be useful later
-        $select->leftJoin('history', 'h', "h.nid = n.nid AND h.uid = :history_uid", [':history_uid' => $query->get('user_id')]);
+        if ($query->has('history_user_id')) {
+            $select->leftJoin('history', 'h', "h.nid = n.nid AND h.uid = :history_uid", [':history_uid' => $query->get('history_user_id')]);
+        } else {
+            $select->leftJoin('history', 'h', "h.nid = n.nid AND 1 = 0");
+        }
+
+        // This is where it potentially gets ugly in term of performance
+        if ($query->has('revision_user_id')) {
+            $revSelect = $this
+                ->database
+                ->select('node_revision', 'r')
+                ->condition('r.uid', $query->has('revision_user_id'))
+                ->where("r.nid = n.nid")
+                ->range(0, 1)
+            ;
+            $revSelect->addExpression('1');
+
+            $select->exists($revSelect);
+        }
 
         $this->applyFilters($select, $query);
 
-        return $select; //->extend(DrupalPager::class)->setQuery($query);
+        /** @var \MakinaCorpus\Drupal\Calista\Datasource\QueryExtender\DrupalPager $pager */
+        $this->pager = $select->extend(DrupalPager::class);
+        $this->pager->setDatasourceQuery($query);
+
+        return $this->pager;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function createResult(array $items, $totalCount = null)
+    {
+        if (null === $totalCount) {
+            $totalCount = $this->getPager()->getTotalCount();
+        }
+
+        return parent::createResult($items, $totalCount);
     }
 
     /**
@@ -251,10 +290,6 @@ class DefaultNodeDatasource extends AbstractDatasource
     public function validateItems(Query $query, array $idList)
     {
         $select = $this->createSelectQuery($query);
-
-        // This is mandatory, else some query conditions could attempt to use
-        // table and it would fail with sql exceptions
-        $select->leftJoin('history', 'h', "h.nid = n.nid AND h.uid = :history_uid", [':history_uid' => $query['user_id']]);
         $this->applyFilters($select, $query);
 
         // Do an except (interjection) to determine if some identifiers from
@@ -276,16 +311,10 @@ class DefaultNodeDatasource extends AbstractDatasource
     {
         $select = $this->createSelectQuery($query);
         $select = $this->process($select, $query);
-
-        /** @var \MakinaCorpus\Drupal\Calista\Datasource\QueryExtender\DrupalPager $pager */
-        $pager = $select->extend(DrupalPager::class);
-        $pager->setDatasourceQuery($query);
+        $items  = $this->preloadDependencies($select->execute()->fetchCol());
 
         // Preload and set nodes at once
-        $result = new DefaultDatasourceResult(Node::class, $this->preloadDependencies($pager->execute()->fetchCol()));
-        $result->setTotalItemCount($pager->getTotalCount());
-
-        return $result;
+        return $this->createResult($items);
     }
 
     /**
