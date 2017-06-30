@@ -72,19 +72,14 @@ function calista_menu() {
     'access arguments'  => ['access administration pages'],
     'type'              => MENU_NORMAL_ITEM,
   ];
-  $items['admin/action/process'] = [
+  $items['admin/calisata/action-process'] = [
     'page callback'     => 'sf_dic_page',
     'page arguments'    => [ActionProcessorController::class .  '::process'],
     'type'              => MENU_CALLBACK,
   ];
-  $items['admin/page/refresh'] = [
+  $items['admin/calista/refresh'] = [
     'page callback'     => 'sf_dic_page',
     'page arguments'    => [AjaxPageController::class .  '::refresh'],
-    'type'              => MENU_CALLBACK,
-  ];
-  $items['admin/page/search'] = [
-    'page callback'     => 'sf_dic_page',
-    'page arguments'    => [AjaxPageController::class .  '::search'],
     'type'              => MENU_CALLBACK,
   ];
 

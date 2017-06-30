@@ -2,6 +2,7 @@
 
 namespace MakinaCorpus\Drupal\Calista\Action;
 
+use MakinaCorpus\Calista\Action\Action;
 use MakinaCorpus\Drupal\Calista\Form\ActionProcessForm;
 
 /**
@@ -149,7 +150,7 @@ abstract class AbstractActionProcessor
 
         return new Action(
             $this->getLinkTitle(),
-            'admin/action/process',
+            'admin/calista/action-process',
             $options,
             $this->getLinkIcon(),
             $this->getLinkPriority(),

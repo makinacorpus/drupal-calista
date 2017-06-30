@@ -2,7 +2,7 @@
   "use strict";
 
   // @todo
-  var refreshUrl = '/admin/page/refresh';
+  var refreshUrl = '/admin/calista/refresh';
 
   /**
    * Spawn modal while loading
