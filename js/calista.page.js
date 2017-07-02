@@ -143,6 +143,7 @@
     }
     // For consistency ensure the page identifier is the right one.
     data._page_id = page.id;
+    data._route = page.route;
 
     $.ajax(refreshUrl, {
       method: 'get',
@@ -247,6 +248,7 @@
           element: element,
           selector: selector,
           query: JSON.parse(selector.attr('data-page-query')),
+          route: selector.attr('data-page-route'),
           id: selector.attr('data-page'),
           searchParam: selector.attr('data-page-search'),
           refreshing: false
