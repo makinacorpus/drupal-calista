@@ -7,8 +7,8 @@
           <h3 class="panel-title">
             {{ portlet.title }}
 
-            {% if portlet.path %}
-              <a class="pull-right" href="{{ url(portlet.path) }}">
+            {% if portlet.route %}
+              <a class="pull-right" href="{{ url(portlet.route) }}">
                 {{ "see all"|t }}
                 <span aria-hidden="true" class="glyphicon glyphicon-share-alt"></span>
               </a>

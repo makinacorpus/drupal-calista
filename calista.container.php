@@ -5,6 +5,7 @@ namespace Drupal\Module\calista;
 use Drupal\Core\DependencyInjection\ServiceProviderInterface;
 use MakinaCorpus\Calista\CalistaBundle;
 use MakinaCorpus\Drupal\Calista\DependencyInjection\Compiler\ActionProcessorRegisterPass;
+use MakinaCorpus\Drupal\Calista\DependencyInjection\Compiler\PortletRegisterPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -24,6 +25,7 @@ class ServiceProvider implements ServiceProviderInterface
         $loader->load('pages.yml');
 
         $container->addCompilerPass(new ActionProcessorRegisterPass());
+        $container->addCompilerPass(new PortletRegisterPass());
     }
 
     /**

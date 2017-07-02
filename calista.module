@@ -405,7 +405,7 @@ function _calista_find_image_recursive(&$element, $view_mode) {
 function calista_page() {
   return [
     '#theme'  => 'calista_page',
-    '#portlets' => [], //\Drupal::service('calista.portlet_registry')->getPortletsForAccount(\Drupal::currentUser()),
+    '#portlets' => \Drupal::service('calista.portlet_registry')->getPortletsForCurrentUser(),
   ];
 }
 

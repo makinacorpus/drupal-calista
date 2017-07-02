@@ -48,3 +48,8 @@ services:
   calista.twig_view_event_subscriber:
     class: MakinaCorpus\Drupal\Calista\EventDispatcher\ViewEventSubscriber
     tags: [{name: event_subscriber}]
+
+  # Portlet registry
+  calista.portlet_registry:
+    public: true
+    class: MakinaCorpus\Drupal\Calista\Portlet\PortletRegistry
