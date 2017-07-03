@@ -5,6 +5,7 @@ namespace MakinaCorpus\Drupal\Calista\Context;
 use MakinaCorpus\Drupal\Calista\EventDispatcher\ContextPaneEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use MakinaCorpus\Calista\Action\Action;
 
 class ContextPane
 {
@@ -242,12 +243,15 @@ class ContextPane
      */
     public function addActions($actions, $title = null, $icon = null, $showTitle = false)
     {
-        $this->actions[] = [
-            'title'     => $title,
-            'icon'      => $icon,
-            'showTitle' => empty($icon) ? true : $showTitle,
-            'actions'   => $actions,
-        ];
+        if ($actions) {
+            $this->actions[] = [
+                'title'     => $title,
+                'icon'      => $icon,
+                'showTitle' => empty($icon) ? true : $showTitle,
+                'actions'   => $actions,
+                'raw'       => (!is_array($actions) || !reset($actions) instanceof Action)
+            ];
+        }
 
         return $this;
     }

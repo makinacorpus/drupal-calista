@@ -10,9 +10,17 @@
     {% endfor %}
   </div>
   <div class="inner inverse">
-    <div class="actions">
-      {{ actions }}
-    </div>
+    {% if actions %}
+      <div class="actions">
+        {% for data in actions %}
+          {% if data.raw %}
+            {{ data.actions }}
+          {% else %}
+            {{ calista_actions_raw(data.actions, data.icon, 'icon', data.title, data.showTitle) }}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
     <div class="tabs">
       {% for key, tab in tabs %}
         <div id="tab-{{ key }}">

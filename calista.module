@@ -503,20 +503,6 @@ function calista_page_build(&$page) {
     $context = \Drupal::service('calista.context');
     $context->init();
 
-    $actions = [];
-    foreach ($context->getActions() as $data) {
-      if (is_array($data['actions']) && count($data['actions']) && reset($data['actions']) instanceof Action) {
-        $actions[] = [
-          '#theme'      => 'calista_actions',
-          '#actions'    => $data['actions'],
-          '#title'      => $data['title'],
-          '#icon'       => $data['icon'],
-          '#show_title' => $data['showTitle'],
-        ];
-      } else {
-        $actions[] = $data['actions'];
-      }
-    }
     $js_setting = [
       'type' => 'setting',
       'data' => [
@@ -537,7 +523,7 @@ function calista_page_build(&$page) {
       '#theme'    => 'calista_context',
       '#items'    => $context->getAll(),
       '#tabs'     => $tabs,
-      '#actions'  => $actions,
+      '#actions'  => $context->getActions(),
       '#attached' => [
         'library' => [['calista', 'calista'], ['system', 'jquery.once']],
         'js'      => [$js_setting],
