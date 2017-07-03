@@ -45,6 +45,8 @@
     var pos = uri.indexOf('?');
     if (-1 !== pos) {
       uri = uri.substr(pos + 1);
+    } else {
+      return {}; // There is no query
     }
 
     var ret = {};
@@ -145,17 +147,22 @@
     data._page_id = page.id;
     data._route = page.route;
 
+    // Do not use data, but query here, since it will be displayed to user
+    // and must match the route parameters, not the AJAX query callback
+    var newUrl = location.pathname + "?" + $.param(query);
+
     $.ajax(refreshUrl, {
       method: 'get',
       cache: false,
       data: data,
       success: function(response) {
         placePageBlocks(page, response);
+        window.history.replaceState({}, document.title, newUrl);
       },
       error: function() {
         // refresh the page manually
         delete data._page_id;
-        location.href = location.pathname + "?" + $.param(data)
+        location.href = newUrl;
       },
       complete: function() {
         modalDestroy(page);
@@ -172,6 +179,7 @@
    *   Partial DOM created from the new block raw HTML
    */
   function attachBehaviors(page, context) {
+
     // Ajax on links
     page.selector.find('[data-page-link]').on("click", function(event) {
       event.stopPropagation();
