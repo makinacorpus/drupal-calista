@@ -66,7 +66,7 @@ abstract class AbstractPortlet
      */
     protected function renderPage($datasourceId, $template, array $baseQuery = [], $sortField = null, $sortOrder = Query::SORT_DESC, $limit = 10)
     {
-        $datasource = $this->viewFactory->getDatasource('ucms_contrib.datasource.node');
+        $datasource = $this->viewFactory->getDatasource($datasourceId);
 
         $inputDefinition = new InputDefinition($datasource, [
             'base_query'          => $baseQuery,

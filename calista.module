@@ -4,10 +4,10 @@
  */
 
 use MakinaCorpus\Calista\Action\Action;
+use MakinaCorpus\Calista\DependencyInjection\ConfigPageDefinition;
 use MakinaCorpus\Drupal\Calista\Controller\ActionProcessorController;
 use MakinaCorpus\Drupal\Calista\Controller\AjaxPageController;
 use MakinaCorpus\Drupal\Calista\Controller\PageController;
-use MakinaCorpus\Calista\DependencyInjection\ConfigPageDefinition;
 
 /**
  * View mode for content display.
