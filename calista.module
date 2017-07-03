@@ -196,6 +196,23 @@ function calista_menu_breadcrumb_alter(&$active_trail, $item) {
 }
 
 /**
+ * Implements hook_module_implements_alter().
+ */
+function calista_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'page_build') {
+    // Move this module's implementation at the bottom of the list to ensure
+    // that everything else has been rendered, and potential events/hooks
+    // were run to fully populate data for the context pane. For example,
+    // phplayout needs to have built the layouts and registered them to its
+    // context before we set the context pane content which contains the
+    // edit form.
+    $group = $implementations['calista'];
+    unset($implementations['calista']);
+    $implementations['calista'] = $group;
+  }
+}
+
+/**
  * Implements hook_entity_info_alter().
  */
 function calista_entity_info_alter(&$entity_info) {
