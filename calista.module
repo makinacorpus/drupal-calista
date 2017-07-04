@@ -492,15 +492,15 @@ function calista_theme() {
         'items'       => [],
         'actions'     => [],
       ],
-      'template' => 'views/calista-context',
+      'template' => 'templates/calista-context',
     ],
     'calista_page' => [
       'variables' => ['portlets' => []],
-      'template'  => 'calista-page',
+      'template'  => 'templates/calista-page',
     ],
     'calista_top' => [
       'variables' => ['links' => []],
-      'template'  => 'calista-top',
+      'template'  => 'templates/calista-top',
     ],
   ];
 }

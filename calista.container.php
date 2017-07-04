@@ -20,7 +20,7 @@ class ServiceProvider implements ServiceProviderInterface
      */
     public function register(ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/config'));
         $loader->load('drupal.yml');
         $loader->load('pages.yml');
 
