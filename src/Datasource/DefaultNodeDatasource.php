@@ -273,7 +273,7 @@ class DefaultNodeDatasource extends AbstractDatasource
     /**
      * {@inheritdoc}
      */
-    protected function createResult(array $items, $totalCount = null)
+    protected function createResult($items, $totalCount = null)
     {
         if (null === $totalCount) {
             $totalCount = $this->getPager()->getTotalCount();

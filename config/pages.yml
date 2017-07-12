@@ -34,3 +34,34 @@ calista:
           href: admin/calista/test/node
           title: Site nodes
           access arguments: ['access content']
+
+    # Sample node as CSV page
+    calista_node_test_csv:
+      datasource: node
+      input:
+        limit_default: 10
+      view:
+        extra:
+          add_header: 1
+          filename: content.csv
+        properties:
+          type:
+          title:
+            string_maxlength: 48
+          status:
+            type: bool
+            bool_value_false: offline
+            bool_value_true: online
+          created:
+            callback: MakinaCorpus\Drupal\Calista\PropertyInfo\EntityField::renderTimestampAsDate
+          changed:
+            callback: MakinaCorpus\Drupal\Calista\PropertyInfo\EntityField::renderTimestampAsInterval
+          field_tags:
+            label: Tags
+            callback: MakinaCorpus\Drupal\Calista\PropertyInfo\EntityField::renderField
+        view_type: csv_stream
+      extra:
+        route:
+          href: admin/calista/test/node/csv
+          title: Site nodes as CSV
+          access arguments: ['access content']

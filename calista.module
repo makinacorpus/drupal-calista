@@ -90,6 +90,12 @@ function calista_menu() {
     'access arguments'  => ['non existing permission'],
     'type'              => MENU_CALLBACK,
   ];
+  $items['admin/calista/test/user/csv'] = [
+    'page callback'     => 'sf_dic_page',
+    'page arguments'    => [PageController::class .  '::page', 'calista.page.drupal_account.csv'],
+    'access arguments'  => ['non existing permission'],
+    'type'              => MENU_CALLBACK,
+  ];
 
   // Find all pages, register them
   // @todo Find a way using the compiler passes.

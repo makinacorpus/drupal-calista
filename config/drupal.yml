@@ -43,6 +43,10 @@ services:
     public: true
     class: MakinaCorpus\Drupal\Calista\Page\AccountPageDefinition
     tags: [{name: calista.page_definition}]
+  calista.page.drupal_account.csv:
+    public: true
+    class: MakinaCorpus\Drupal\Calista\Page\AccountCsvPageDefinition
+    tags: [{name: calista.page_definition}]
 
   # Event subscribers
   calista.twig_view_event_subscriber:
