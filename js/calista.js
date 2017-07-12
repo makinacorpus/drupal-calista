@@ -57,8 +57,8 @@
             $page.css('padding-right', shown ? initial_size : '15px');
           }
           else {
-            $contextualPane.animate(prop);
-            $page.animate({paddingRight: shown ? initial_size : '15px'});
+            $contextualPane.css(prop);
+            $page.css({paddingRight: shown ? initial_size : '15px'});
           }
         }
 

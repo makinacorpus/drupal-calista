@@ -538,7 +538,7 @@ function calista_page_build(&$page) {
 
     $tabs = $context->getTabs();
     if (!$tabs) {
-        $context->addTab('default', t("Context"), 'pencil');
+        $context->addTab('default', t("Context"), 'chevron-left');
         $tabs = $context->getTabs();
     }
 
