@@ -348,7 +348,7 @@ function calista_field_attach_view_alter(&$output, $context) {
     ];
     $markup = '<div class="calista-default-icon img-thumbnail"><div><div>';
     if (!empty($icon_mapping[$output['#bundle']])) {
-      $markup .= '<span class="glyphicon glyphicon-' . $icon_mapping[$output['#bundle']] . '"></span>';
+      $markup .= '<span class="fa fa-' . $icon_mapping[$output['#bundle']] . '"></span>';
     }
     else {
       $markup .= '<span>' . node_type_get_name($context['entity']) . '</span>';
@@ -373,13 +373,13 @@ function calista_field_attach_view_alter(&$output, $context) {
   $output['metadata']['#suffix'] = '</div>';
   if (!$context['entity']->status) {
     $output['metadata']['status_icon'] = [
-      '#markup' => '<span class="calista-unpublished-icon glyphicon glyphicon-warning-sign"></span>',
+      '#markup' => '<span class="calista-unpublished-icon fa fa-warning-sign"></span>',
       '#weight' => 5,
     ];
   }
   if ($meta_type && isset($icon_mapping[$meta_type])) {
     $output['metadata']['type_icon'] = [
-      '#markup' => '<span class="calista-type-icon glyphicon glyphicon-' . $icon_mapping[$meta_type] . '"></span>',
+      '#markup' => '<span class="calista-type-icon fa fa-' . $icon_mapping[$meta_type] . '"></span>',
       '#weight' => 10,
     ];
   }
@@ -557,7 +557,6 @@ function calista_page_build(&$page) {
   if (
     variable_get('calista_toolbar_enable') &&
     (user_is_logged_in() || path_is_admin(current_path()))
-    && module_exists('ucms_site')
   ) {
     $links = menu_navigation_links('main-menu');
     foreach ($links as $i => $link) {
@@ -574,6 +573,16 @@ function calista_page_build(&$page) {
         '#links' => $links,
       ],
     ];
+  }
+
+  // Add seven theme customization or font-awesome if asked for
+  $seven = variable_get('calista_seven_force');
+  if (null === $seven && 'seven' === $GLOBALS['theme']) {
+    drupal_add_library('calista', 'calista_seven');
+  } else if (true === $seven) {
+    drupal_add_library('calista', 'calista_seven');
+  } else if (variable_get('calista_font_awesome', true)) {
+    drupal_add_library('calista', 'calista_fa');
   }
 }
 
@@ -594,6 +603,13 @@ function calista_library() {
         $path . '/js/calista.css' => ['type'  => 'file', 'media' => 'screen'],
       ],
       'dependencies' => [['system', 'jquery.cookie']],
+    ],
+    'calista_fa' => [
+      'title' => 'Calista font awesome integration',
+      'version' => '0.1',
+      'css' => [
+        $path . '/js/seven/glyphicons.css' => ['type'  => 'file', 'media' => 'screen'],
+      ],
     ],
     'calista_page' => [
       'title' => 'Calista page handling',
