@@ -15,25 +15,41 @@
 @font-size-base:                            14px;
 @brand-primary:                             darken(#428bca, 6.5%); // #337ab7
 @padding-base-horizontal:                   12px;
+@padding-base-vertical:                     6px;
+@padding-large-horizontal:                  calc(@padding-base-horizontal * 2);
+@padding-large-vertical:                    calc(@padding-base-vertical * 2);
 
 // Custom Calista variables
-@calista-pane-zindex:                    110;
 @calista-border-radius:                  0;
-@calista-pane-width:                     330px;
-@calista-pane-height:                    330px;
-@calista-pane-color:                     lighten(@gray-light, 15%);
 @calista-pane-bg:                        #222;
 @calista-pane-border:                    darken(@calista-pane-bg, 10%);
-@calista-pane-link-color:                lighten(@gray-light, 15%);
-@calista-pane-link-hover-color:          #fff;
+@calista-pane-color:                     lighten(@gray-light, 15%);
+@calista-pane-height:                    330px;
+@calista-pane-input-bg:                  #2d2d2d;
+@calista-pane-input-border:              #4d4d4d;
 @calista-pane-link-active-color:         @calista-pane-link-hover-color;
+@calista-pane-link-color:                lighten(@gray-light, 15%);
 @calista-pane-link-disabled-color:       #444;
-@calista-pane-toggle-font-size:          @font-size-base;
-@calista-pane-toggle-color:              @calista-pane-link-color;
-@calista-pane-toggle-hover-color:        @calista-pane-link-hover-color;
-@calista-pane-toggle-hover-bg:           darken(@brand-primary, 10%);
-@calista-pane-toggle-active-color:       @calista-pane-link-active-color;
+@calista-pane-link-hover-color:          #fff;
 @calista-pane-toggle-active-bg:          @brand-primary;
+@calista-pane-toggle-active-color:       @calista-pane-link-active-color;
+@calista-pane-toggle-color:              @calista-pane-link-color;
+@calista-pane-toggle-font-size:          @font-size-base;
+@calista-pane-toggle-hover-bg:           darken(@brand-primary, 10%);
+@calista-pane-toggle-hover-color:        @calista-pane-link-hover-color;
+@calista-pane-width:                     330px;
+@calista-pane-zindex:                    105;
+@calista-toolbar-zindex:                 110;
+
+/*****************************************************************************
+ *
+ * TOOLBAR
+ *
+ *****************************************************************************/
+
+#toolbar {
+  z-index: @calista-toolbar-zindex;
+}
 
 /*****************************************************************************
  *
@@ -71,7 +87,7 @@
     background: @calista-pane-bg;
     z-index: 2;
     width: 100%;
-    padding-top: 10px;
+    padding: @padding-base-horizontal;
   }
 
   &.pane-right {
@@ -79,9 +95,8 @@
     right: 0;
     width: @calista-pane-width;
     height: 100%;
-
     .inner {
-      padding-top: 50px;
+      padding-top: calc(50px + @padding-base-horizontal);
     }
   }
 }
@@ -194,13 +209,43 @@
 
 /*****************************************************************************
  *
+ * TYPO AND STYLING WITHIN PANE
+ *
+ *****************************************************************************/
+
+#contextual-pane .inner {
+  h2, h3, h4 {
+    margin: @padding-large-vertical 0;
+    border-bottom: 1px solid @calista-pane-input-bg;
+    padding-bottom: @padding-base-vertical;
+    &:first-child {
+      margin-top: 0px;
+    }
+  }
+  h2 {
+    padding-bottom: @padding-large-vertical;
+    font-size: 150%;
+  }
+  h3 {
+    font-size: 130%;
+  }
+  h4 {
+    font-size: 120%;
+  }
+  hr {
+    border-color: @calista-pane-input-border;
+  }
+}
+
+/*****************************************************************************
+ *
  * FORMS IN CONTEXT PANE
  *
  *****************************************************************************/
 
-#contextual-pane .inner input {
-  background: #2d2d2d;
-  border-color: #4d4d4d;
+#contextual-pane .inner input, #contextual-pane .inner button {
+  background: @calista-pane-input-bg;
+  border-color: @calista-pane-input-border;
   color: @calista-pane-color;
 }
 /* Minor fix for inputs in dropdowns */
