@@ -68,7 +68,7 @@ class DefaultAccountDatasource extends AbstractDatasource
      *
      * {@inheritdoc}
      */
-    public function getSortFields($query)
+    public function getSorts()
     {
         return [
           'u.created' => $this->t("creation date"),
