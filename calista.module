@@ -579,7 +579,7 @@ function calista_page_build(&$page) {
   $seven = variable_get('calista_seven_force');
   if (null === $seven && 'seven' === $GLOBALS['theme']) {
     drupal_add_library('calista', 'calista_seven');
-  } else if (true === $seven) {
+  } else if ($seven) {
     drupal_add_library('calista', 'calista_seven');
   } else if (variable_get('calista_font_awesome', true)) {
     drupal_add_library('calista', 'calista_fa');
