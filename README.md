@@ -73,3 +73,7 @@ By removing the variable or setting it to ``null`` seven admin theme will be
 automatically detected at runtime and fixes will be loaded if necessary.
 
 
+### Usage
+
+For extensive documentation, please refer to the [Calista API documentation](https://github.com/makinacorpus/calista)
+
