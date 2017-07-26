@@ -37,6 +37,11 @@ services:
     class: MakinaCorpus\Drupal\Calista\Datasource\DefaultNodeDatasource
     arguments: ['@database', '@entity.manager']
     tags: [{name: calista.datasource, id: node}]
+  calista.datasource.drupal_entity_node:
+    public: false
+    class: MakinaCorpus\Drupal\Calista\Datasource\EntityDatasource
+    arguments: ['@database', node]
+    tags: [{name: calista.datasource, id: entity_node}]
 
   # Sample Drupal page definition from services
   calista.page.drupal_account:

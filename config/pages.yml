@@ -35,6 +35,58 @@ calista:
           title: Site nodes
           access arguments: ['access content']
 
+    # Sample node page using the streamable EntityDatasource
+    calista_node_entity_test:
+      datasource: entity_node
+      input:
+        search_parse: true
+        search_enable: true
+        limit_default: 32
+      view:
+        show_search: true
+        show_pager: true
+        properties:
+          id: true
+          revision: true
+          label: true
+          language: true
+          bundle: true
+          uid: true
+          status: bool
+          created:
+            callback: renderDate
+            date_format: d/m/Y
+          changed:
+            callback: renderDate
+            date_format: d/m/Y
+          comment: true
+          promote: bool
+          sticky: bool
+          tnid: true
+          translate: bool
+          revision_uid: true
+          revision_log: true
+          revision_timestamp:
+            callback: renderDate
+            date_format: d/m/Y
+          body_value: true
+          body_summary: false
+          body_format: true
+          image_fid: int
+          image_alt: true
+          image_title: true
+          image_width: int
+          image_height: int
+        view_type: twig_page
+      # Extra here are Drupal-specific options
+      extra:
+        # Route definition must match hook_menu() items, the only difference
+        # is that you need to add the 'href' key
+        route:
+          href: admin/calista/test/entity-node
+          title: Nodes as raw entity
+          access arguments: ['access content']
+
     # Sample node as CSV page
     calista_node_test_csv:
       datasource: node
