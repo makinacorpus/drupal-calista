@@ -2,13 +2,13 @@
 
 namespace MakinaCorpus\Drupal\Calista\Controller;
 
+use MakinaCorpus\Calista\Controller\AjaxController;
 //use MakinaCorpus\Calista\Controller\AjaxControllerTrait;
-use MakinaCorpus\Drupal\Sf\Controller;
 
 /**
  * Page AJAX feature controller
  */
-class AjaxPageController extends Controller
+class AjaxPageController extends AjaxController
 {
     //use AjaxControllerTrait;
 }
