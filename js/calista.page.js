@@ -128,8 +128,20 @@
     if (page.refreshing) {
       return;
     }
+
     page.refreshing = true;
+
+    // Build the new URL to display in the address bar or to redirect to.
+    var newUrl = location.pathname + "?" + $.param(query);
+
+    // No AJAX in a form context.
+    if (page.viewType === 'twig_form_page') {
+      location.href = newUrl;
+      return;
+    }
+
     modalSpawn(page);
+
     // Rebuild correct query data from our state.
     var data = {};
     if (!dropAll) {
@@ -146,10 +158,6 @@
     // For consistency ensure the page identifier is the right one.
     data._page_id = page.id;
     data._route = page.route;
-
-    // Do not use data, but query here, since it will be displayed to user
-    // and must match the route parameters, not the AJAX query callback
-    var newUrl = location.pathname + "?" + $.param(query);
 
     $.ajax(refreshUrl, {
       method: 'get',
@@ -258,6 +266,7 @@
           query: JSON.parse(selector.attr('data-page-query')),
           route: selector.attr('data-page-route'),
           id: selector.attr('data-page'),
+          viewType: selector.attr('data-view-type'),
           searchParam: selector.attr('data-page-search'),
           refreshing: false
         };
