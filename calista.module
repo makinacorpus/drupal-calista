@@ -499,14 +499,17 @@ function calista_theme() {
         'actions'     => [],
       ],
       'template' => 'templates/calista-context',
+      'engine'  => 'twig',
     ],
     'calista_page' => [
       'variables' => ['portlets' => []],
       'template'  => 'templates/calista-page',
+      'engine'  => 'twig',
     ],
     'calista_top' => [
       'variables' => ['links' => []],
       'template'  => 'templates/calista-top',
+      'engine'  => 'twig',
     ],
   ];
 }
