@@ -497,6 +497,7 @@ function calista_theme() {
         'tabs'        => [],
         'items'       => [],
         'actions'     => [],
+        'context'     => null,
       ],
       'template' => 'templates/calista-context',
       'engine'  => 'twig',
@@ -529,20 +530,10 @@ function calista_page_build(&$page) {
     $context = \Drupal::service('calista.context');
     $context->init();
 
-    $js_setting = [
-      'type' => 'setting',
-      'data' => [
-        'calista' => [
-          'defaultPane' => $context->getDefaultTab(),
-          'isOpened'    => $context->isOpened(),
-        ],
-      ],
-    ];
-
     $tabs = $context->getTabs();
     if (!$tabs) {
-        $context->addTab('default', t("Context"), 'chevron-left');
-        $tabs = $context->getTabs();
+      $context->addTab('default', t("Context"), 'chevron-left');
+      $tabs = $context->getTabs();
     }
 
     $page['page_top']['calista_context_pane'] = [
@@ -550,9 +541,9 @@ function calista_page_build(&$page) {
       '#items'    => $context->getAll(),
       '#tabs'     => $tabs,
       '#actions'  => $context->getActions(),
+      '#context'  => $context,
       '#attached' => [
         'library' => [['calista', 'calista'], ['system', 'jquery.once']],
-        'js'      => [$js_setting],
       ],
     ];
   }
@@ -612,14 +603,6 @@ function calista_library() {
       'version' => '0.1',
       'css' => [
         $path . '/js/seven/glyphicons.css' => ['type'  => 'file', 'media' => 'screen'],
-      ],
-    ],
-    'calista_page' => [
-      'title' => 'Calista page handling',
-      'version' => '0.1',
-      'js' => [
-        $path . '/js/jquery.typewatch.js' => [],
-        $path . '/js/calista.page.js' => [],
       ],
     ],
     'calista_seven' => [

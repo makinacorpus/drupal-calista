@@ -205,7 +205,7 @@ class ContextPane
      */
     public function getDefaultTab()
     {
-        return $this->defaultTab ? $this->defaultTab : reset($this->tabs)['key'];
+        return $this->defaultTab ? $this->defaultTab : 'default';
     }
 
     /**

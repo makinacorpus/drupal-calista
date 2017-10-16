@@ -21,25 +21,30 @@
 
 // Custom Calista variables
 @calista-border-radius:                  0;
+@calista-padding-horizontal:             @padding-base-horizontal;
+@calista-padding-vertical:               @padding-base-vertical;
 @calista-pane-bg:                        #222;
 @calista-pane-border:                    darken(@calista-pane-bg, 10%);
+@calista-pane-button-size:               40px;
 @calista-pane-color:                     lighten(@gray-light, 15%);
+@calista-pane-fg:                        #fff;
 @calista-pane-height:                    330px;
 @calista-pane-input-bg:                  #2d2d2d;
 @calista-pane-input-border:              #4d4d4d;
-@calista-pane-link-active-color:         @calista-pane-link-hover-color;
+@calista-pane-link-active-color:         @calista-pane-fg;
 @calista-pane-link-color:                lighten(@gray-light, 15%);
 @calista-pane-link-disabled-color:       #444;
-@calista-pane-link-hover-color:          #fff;
+@calista-pane-link-hover-color:          @calista-pane-link-active-color;
 @calista-pane-toggle-active-bg:          @brand-primary;
 @calista-pane-toggle-active-color:       @calista-pane-link-active-color;
 @calista-pane-toggle-color:              @calista-pane-link-color;
 @calista-pane-toggle-font-size:          @font-size-base;
 @calista-pane-toggle-hover-bg:           darken(@brand-primary, 10%);
 @calista-pane-toggle-hover-color:        @calista-pane-link-hover-color;
+@calista-pane-top-delta:                 50px; // navbar height
 @calista-pane-width:                     330px;
-@calista-pane-zindex:                    105;
-@calista-toolbar-zindex:                 110;
+@calista-pane-zindex:                    1102;
+@calista-toolbar-zindex:                 1103; // @zindex-admin-navbar
 
 /*****************************************************************************
  *
@@ -57,9 +62,41 @@
  *
  *****************************************************************************/
 
+.contextual-large-button() {
+  width: @calista-pane-button-size;
+  height: @calista-pane-button-size;
+  background: #222;
+  overflow: hidden;
+  position: relative;
+
+  a {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+
+    font-size: @calista-pane-toggle-font-size;
+    display: inline-block;
+    color: @calista-pane-toggle-color;
+
+    &.active, &:focus, &:hover {
+      background-color: @calista-pane-toggle-hover-bg;
+      color: @calista-pane-toggle-hover-color;
+      text-decoration: none;
+    }
+  }
+}
+
 #contextual-pane {
   position: fixed;
   z-index: @calista-pane-zindex;
+
+  // Default right position
+  top: 0;
+  right: 0;
+  width: @calista-pane-width;
+  height: 100%;
 
   .tabs a {
     background: transparent;
@@ -87,77 +124,35 @@
     background: @calista-pane-bg;
     z-index: 2;
     width: 100%;
-    padding: @padding-base-horizontal;
+    padding: @calista-padding-horizontal;
+
+    // Default right position
+    padding-top: calc(@calista-pane-top-delta + @calista-padding-horizontal);
   }
 
-  &.pane-right {
-    top: 0;
+  &.contextual-collapsed {
+    transform: translateX(100%);
+    transition: all 0.4s ease-out;
+  }
+  &:not(.contextual-collapsed) {
+    transition: all 0.4s ease-out;
+  }
+  &.initial-collapse {
+    transition: none !important;
+  }
+
+  [data-tab] {
+    display: none;
+    position: absolute;
+    top: @calista-pane-button-size + @calista-pane-top-delta + 10px;
     right: 0;
-    width: @calista-pane-width;
-    height: 100%;
-    .inner {
-      padding-top: calc(50px + @padding-base-horizontal);
-    }
+    left: 0;
+    bottom: 0;
+    padding: @calista-padding-vertical @calista-padding-horizontal;
   }
-}
-
-#contextual-pane .tabs {
-  position: relative;
-  color: @calista-pane-color;
-}
-#contextual-pane .tabs > div {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: none;
-}
-#contextual-pane .tabs > div.active {
-  display: block;
-}
-
-#contextual-pane-toggle {
-  position: absolute;
-  display: inline-block;
-  background: @calista-pane-bg;
-  font-size: @calista-pane-toggle-font-size;
-
-  a {
-    display: inline-block;
-    padding: @padding-base-horizontal;
-    color: @calista-pane-toggle-color;
-
-    &.active {
-      background-color: @calista-pane-toggle-active-bg;
-      color: @calista-pane-toggle-active-color;
-    }
-
-    &:focus,
-    &:hover {
-      background-color: @calista-pane-toggle-hover-bg;
-      color: @calista-pane-toggle-hover-color;
-      text-decoration: none;
-    }
+  [data-tab].active {
+    display: block;
   }
-}
-
-#contextual-pane.pane-right #contextual-pane-toggle {
-  top: 50%;
-  right: 100%;
-  border-radius: @calista-border-radius 0 0 @calista-border-radius;
-}
-#contextual-pane.pane-right #contextual-pane-toggle a:first-child {
-  border-top: none;
-  border-radius: @calista-border-radius 0 0 0;
-}
-#contextual-pane.pane-right #contextual-pane-toggle a:last-child {
-  border-radius: 0 0 0 @calista-border-radius;
-}
-#contextual-pane.pane-right #contextual-pane-toggle a:only-child {
-  border-radius: @calista-border-radius 0 0 @calista-border-radius;
-}
-
-#contextual-pane #contextual-pane-toggle a.active {
-  color: #fff;
 }
 
 #contextual-pane > .inner > .actions {
@@ -176,11 +171,34 @@
 
 /*****************************************************************************
  *
+ * TABS BUTTONS AND TOGGLE
+ *
+ *****************************************************************************/
+
+#contextual-pane-tabs {
+  .tab-button {
+    .contextual-large-button();
+
+    display: inline-block;
+  }
+}
+
+#contextual-pane-toggle {
+  .contextual-large-button();
+
+  position: absolute;
+  top: 50%;
+  left: -@calista-pane-button-size;
+  transform: translateY(-50%);
+}
+
+/*****************************************************************************
+ *
  * PAGE
  *
  *****************************************************************************/
 
-.calista-page {
+[data-page] {
   [data-page-block=display_mode] {
     margin-bottom: 10px;
   }
@@ -198,13 +216,27 @@
 .page-modal {
   display: none;
   background: white;
-  opacity: 0.4;
+  opacity: 0;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   z-index: 1000;
+
+  // Animate background opacity
+  &.loading {
+    display: block;
+    opacity: 0.4;
+    transition: opacity 1s ease-in;
+  }
+  transition: opacity 0.2s ease-out;
+}
+
+.inverse {
+  .page-modal {
+    background: black;
+  }
 }
 
 /*****************************************************************************
@@ -213,17 +245,21 @@
  *
  *****************************************************************************/
 
-#contextual-pane .inner {
-  h2, h3, h4 {
-    margin: @padding-large-vertical 0;
+#contextual-pane [data-tab] {
+  * {
+    color: @calista-pane-fg;
+  }
+
+  h2, h3, h4, h5, h6 {
+    margin: @calista-padding-vertical 0;
     border-bottom: 1px solid @calista-pane-input-bg;
-    padding-bottom: @padding-base-vertical;
+    padding-bottom: @calista-padding-vertical;
     &:first-child {
       margin-top: 0px;
     }
   }
   h2 {
-    padding-bottom: @padding-large-vertical;
+    padding-bottom: @calista-padding-vertical;
     font-size: 150%;
   }
   h3 {
@@ -250,7 +286,7 @@
 }
 /* Minor fix for inputs in dropdowns */
 #contextual-pane .dropdown-menu input {
-  background: #fff;
+  background: @calista-pane-fg;
   color: @calista-pane-bg;
 }
 

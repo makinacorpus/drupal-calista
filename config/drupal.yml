@@ -53,11 +53,6 @@ services:
     class: MakinaCorpus\Drupal\Calista\Page\AccountCsvPageDefinition
     tags: [{name: calista.page_definition}]
 
-  # Event subscribers
-  calista.twig_view_event_subscriber:
-    class: MakinaCorpus\Drupal\Calista\EventDispatcher\ViewEventSubscriber
-    tags: [{name: event_subscriber}]
-
   # Portlet registry
   calista.portlet_registry:
     public: true

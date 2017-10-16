@@ -1,5 +1,7 @@
 composer.lock
 coverage
+js/calista.css.map
+js/calista.js.map
 node_modules
 phpunit.xml
 vendor
