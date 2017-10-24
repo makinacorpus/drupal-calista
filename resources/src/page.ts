@@ -114,7 +114,7 @@ export class Page {
         this.modal.setAttribute("class", "page-modal");
         this.element.insertBefore(this.modal, this.element.firstChild);
 
-        this.attachBehaviors();
+        this.attachBehaviors(false);
     }
 
     private request(route: string, data: any): Promise<XMLHttpRequest> {
@@ -252,14 +252,16 @@ export class Page {
     /**
      * Re-attach current page page and Drupal behaviours on a replaced block
      */
-    attachBehaviors() {
+    attachBehaviors(withDrupalBehavior?: boolean) {
         const target = this;
 
         // Attach globally Drupal behaviors, we need to do it at the page level
         // else external javascript modules/behaviors will miss whole page, for
         // exemple, dragula based users will not find the container, since we
         // just re-attached the children
-        Drupal.attachBehaviors(this.element);
+        if (withDrupalBehavior) {
+            Drupal.attachBehaviors(this.element);
+        }
 
         for (let link of <Element[]><any>this.element.querySelectorAll("[data-page-link]")) {
             link.addEventListener("click", (event: MouseEvent) => {
