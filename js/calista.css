@@ -85,6 +85,16 @@
 #tab-notification {
   overflow-y: auto;
 }
+body:not(.calista-body-with-pane) {
+  transition: all 0.4s ease-out;
+}
+body.calista-body-with-pane {
+  padding-right: 330px;
+  transition: all 0.4s ease-out;
+}
+body.initial-collapse {
+  transition: none !important;
+}
 /*****************************************************************************
  *
  * TABS BUTTONS AND TOGGLE

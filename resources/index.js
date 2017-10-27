@@ -1,3 +1,3 @@
 
-import "./less/calista.less";
+import "./less/style.less";
 import "./src/drupal";

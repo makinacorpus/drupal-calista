@@ -59,17 +59,21 @@ export class Pane {
         // slowly open or slowly collapse on every page change: it would be
         // a useless an annoying extra animation
         (<HTMLElement>this.element).classList.add("initial-collapse");
+        document.body.classList.add("initial-collapse");
         setTimeout(() => {
             (<HTMLElement>this.element).classList.remove("initial-collapse");
+            document.body.classList.remove("initial-collapse");
         }, 1000);
 
         // Deploy the pane
         if (this.state.isHidden()) {
             this.displayed = false;
             this.element.classList.add("contextual-collapsed");
+            document.body.classList.remove("calista-body-with-pane");
         } else {
             this.displayed = true;
             this.element.classList.remove("contextual-collapsed");
+            document.body.classList.add("calista-body-with-pane");
         }
     }
 
@@ -102,10 +106,12 @@ export class Pane {
     async togglePane() {
         if (this.displayed) {
             this.element.classList.add("contextual-collapsed");
+            document.body.classList.remove("calista-body-with-pane");
             this.displayed = false;
             this.state.hide();
         } else {
             this.element.classList.remove("contextual-collapsed");
+            document.body.classList.add("calista-body-with-pane");
             this.displayed = true;
             this.state.show();
         }
