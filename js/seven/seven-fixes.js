@@ -8,9 +8,6 @@
    */
   Drupal.behaviors.sevenFixes = {
     attach: function(context, settings) {
-
-      var opened = [];
-
       // Emulates bootstrap dropdowns.
       $(context).find('.dropdown-toggle').once('dropdown-toggle', function () {
         var link = $(this);
@@ -21,6 +18,7 @@
           dropdownMenus.push(parent);
           link.click(function () {
             child.show();
+            return false;
           });
         }
       });
