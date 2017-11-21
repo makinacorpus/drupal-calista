@@ -132,7 +132,7 @@
     page.refreshing = true;
 
     // Build the new URL to display in the address bar or to redirect to.
-    var newUrl = location.pathname + "?" + $.param(query);
+    var newUrl = '/' + page.route + '?' + $.param(query);
 
     // No AJAX in a form context.
     if (page.viewType === 'twig_form_page') {
@@ -165,7 +165,11 @@
       data: data,
       success: function(response) {
         placePageBlocks(page, response);
-        window.history.replaceState({}, document.title, newUrl);
+        // Updates the current page's URL if it's the same as the calista page
+        // we just rebuilt.
+        if ('/' + page.route == location.pathname) {
+          window.history.replaceState({}, document.title, newUrl);
+        }
       },
       error: function() {
         // refresh the page manually
