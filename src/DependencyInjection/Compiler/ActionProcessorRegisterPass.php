@@ -31,6 +31,11 @@ class ActionProcessorRegisterPass implements CompilerPassInterface
                 throw new \InvalidArgumentException(sprintf('Service "%s" must implement extend "%s".', $id, AbstractActionProcessor::class));
             }
 
+            $def->addMethodCall('setContainer', [new Reference('service_container')]);
+            if ($container->has('security.authorization_checker')) {
+                $def->addMethodCall('setAuthorizationChecker', [new Reference('security.authorization_checker')]);
+            }
+
             $definition->addMethodCall('register', [new Reference($id)]);
         }
     }

@@ -3,6 +3,7 @@
 namespace MakinaCorpus\Drupal\Calista\Action;
 
 use MakinaCorpus\Calista\Action\Action;
+use MakinaCorpus\Calista\Action\AuthorizationActionProviderTrait;
 use MakinaCorpus\Drupal\Calista\Form\ActionProcessForm;
 
 /**
@@ -11,14 +12,16 @@ use MakinaCorpus\Drupal\Calista\Form\ActionProcessForm;
  */
 abstract class AbstractActionProcessor
 {
-    private $title;
+    use AuthorizationActionProviderTrait;
+
+    private $description;
+    private $group;
     private $icon;
-    private $priority = 0;
-    private $isPrimary = false;
     private $isDangerous = false;
     private $isDialog = true;
-    private $group;
-    private $description;
+    private $isPrimary = false;
+    private $priority = 0;
+    private $title;
 
     /**
      * Default constructor
