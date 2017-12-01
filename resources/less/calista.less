@@ -79,7 +79,7 @@
     padding: @calista-padding-horizontal;
 
     // Default right position
-    padding-top: calc(@calista-pane-top-delta + @calista-padding-horizontal);
+    padding-top: 4px;
   }
 
   &.contextual-collapsed {
@@ -96,7 +96,7 @@
   [data-tab] {
     display: none;
     position: absolute;
-    top: @calista-pane-button-size + @calista-pane-top-delta + 10px;
+    top: @calista-pane-top-delta;
     right: 0;
     left: 0;
     bottom: 0;
@@ -244,15 +244,17 @@ body {
  *
  *****************************************************************************/
 
-#contextual-pane .inner input, #contextual-pane .inner button {
-  background: @calista-pane-input-bg;
-  border-color: @calista-pane-input-border;
-  color: @calista-pane-color;
-}
-/* Minor fix for inputs in dropdowns */
-#contextual-pane .dropdown-menu input {
-  background: @calista-pane-fg;
-  color: @calista-pane-bg;
+#contextual-pane {
+  input, button, a.btn {
+    background: @calista-pane-input-bg;
+    border-color: @calista-pane-input-border;
+    color: @calista-pane-color;
+  }
+  /* Minor fix for inputs in dropdowns */
+  .dropdown-menu input {
+    background: @calista-pane-fg;
+    color: @calista-pane-bg;
+  }
 }
 
 /*****************************************************************************
