@@ -162,7 +162,7 @@ export class Page {
                     }
 
                     // And re-attach our own behaviors, they are not targetted properly because of once
-                    this.attachBehaviors();
+                    this.attachBehaviors(true);
 
                 } else {
                     console.log(`Warning, block ${index} does not exists in page`);

@@ -49,7 +49,7 @@
   z-index: 2;
   width: 100%;
   padding: 12px;
-  padding-top: calc(62px);
+  padding-top: 4px;
 }
 #contextual-pane.contextual-collapsed {
   transform: translateX(100%);
@@ -64,7 +64,7 @@
 #contextual-pane [data-tab] {
   display: none;
   position: absolute;
-  top: 100px;
+  top: 50px;
   right: 0;
   left: 0;
   bottom: 0;
@@ -231,13 +231,16 @@ body.initial-collapse {
  * FORMS IN CONTEXT PANE
  *
  *****************************************************************************/
-#contextual-pane .inner input,
-#contextual-pane .inner button {
+#contextual-pane {
+  /* Minor fix for inputs in dropdowns */
+}
+#contextual-pane input,
+#contextual-pane button,
+#contextual-pane a.btn {
   background: #2d2d2d;
   border-color: #4d4d4d;
   color: #9d9d9d;
 }
-/* Minor fix for inputs in dropdowns */
 #contextual-pane .dropdown-menu input {
   background: #fff;
   color: #222;
