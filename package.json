@@ -3,9 +3,9 @@
     "version": "1.0.0-dev",
     "private": true,
     "author": "Makina Corpus",
-    "main": "resources/index.js",
-    "repository": "https://github.com/makinacorpus/drupal-calista.git",
-    "license": "GPL-2",
+    "main": "src/Resources/front/index.js",
+    "repository": "https://github.com/makinacorpus/php-calista.git",
+    "license": "GPL-2.0-or-later",
     "devDependencies": {
         "@types/jquery": "^2.0.41",
         "babel-core": "^6.26.0",
