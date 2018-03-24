@@ -2,6 +2,7 @@ services:
 
   # Context pane
   calista.context:
+    public: true
     class: MakinaCorpus\Drupal\Calista\Context\ContextPane
     arguments: ['@event_dispatcher', '@request_stack']
 
